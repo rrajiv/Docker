@@ -1,21 +1,17 @@
-FROM ubuntu:latest
+FROM node:10.23.1-alpine3.9
 
-MAINTAINER Rajiv <rajiv@utmail.net>
+LABEL maintainer="rajiv@utmail.net"
 
-# Run update
-RUN apt-get update
+RUN apk add --no-cache bash
 
-# install nodejs
-RUN apt-get install -y nodejs npm
+# install items for node
+RUN npm install express
+RUN npm install -g nodemon
 
-# add any special npm modules
-#RUN npm install 
+WORKDIR /home/app
+USER node
+ENV PORT 3000
 
-# create the coding dir
-RUN mkdir src
+EXPOSE 3000
 
-# change the bash shell
-RUN echo "PS1='Rajiv node image  >> '" >> /root/.bashrc
-
-# enter here
-ENTRYPOINT ["/bin/bash"]
+ENTRYPOINT /bin/bash
